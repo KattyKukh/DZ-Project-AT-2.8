@@ -135,7 +135,7 @@ class MoneyTransferTest {
         }
         DashboardPage.pressReplenishCard(firstCardId)
                 .replenishCardCancel(transfer, DataHelper.CardInfo.getSecondCardInfo(authInfo));
-        assertEquals(firstCardBalance + transfer, DashboardPage.getBalanceCard(firstCardId));
+        assertEquals(firstCardBalance, DashboardPage.getBalanceCard(firstCardId));
         assertEquals(secondCardBalance, DashboardPage.getBalanceCard(secondCardId));
     }
 }
