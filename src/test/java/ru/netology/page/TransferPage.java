@@ -1,9 +1,9 @@
-package ru.netology.web.page;
+package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
-import ru.netology.web.data.DataHelper;
+import ru.netology.data.DataHelper;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -21,11 +21,11 @@ public class TransferPage {
     private SelenideElement buttonTransfer = $("[data-test-id=action-transfer]");
     private SelenideElement buttonCancel = $("[data-test-id=action-cancel]");
 
-    public DashboardPage replenishCardBalance(Integer sum, DataHelper.CardInfo card) {
+    public DashboardPage replenishCardBalance(Integer sum, String cardNumber) {
         amount.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
         amount.setValue(Integer.toString(sum));
         fromCard.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
-        fromCard.sendKeys(card.getCardNumber());
+        fromCard.sendKeys(cardNumber);
         buttonTransfer.click();
         return new DashboardPage();
     }
