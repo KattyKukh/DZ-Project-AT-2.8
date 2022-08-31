@@ -35,17 +35,16 @@ public class DataHelper {
     }
 
     @Value
-    @AllArgsConstructor
     public static class CardInfo {
-        private String id;
         private String cardNumber;
+    }
 
-        public static String getFirstCardNumber(String id) {
-            return "5559 0000 0000 0001";
-        }
+    public static String getFirstCardNumber() {
+        return "5559 0000 0000 0001";
+    }
 
-        public static String getSecondCardNumber(String id) {
-            return "5559 0000 0000 0002";
-        }
+    public static String getSecondCardNumber() {
+        return "5559 0000 0000 0002";
     }
 }
+

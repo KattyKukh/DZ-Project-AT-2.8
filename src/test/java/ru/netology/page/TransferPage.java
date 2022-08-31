@@ -20,21 +20,20 @@ public class TransferPage {
     private SelenideElement toCard = $("[data-test-id=to] .input__control");
     private SelenideElement buttonTransfer = $("[data-test-id=action-transfer]");
     private SelenideElement buttonCancel = $("[data-test-id=action-cancel]");
-
-    public DashboardPage replenishCardBalance(Integer sum, String cardNumber) {
+    public void fillInForm(Integer sum, String cardNumber) {
         amount.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
         amount.setValue(Integer.toString(sum));
         fromCard.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
         fromCard.sendKeys(cardNumber);
+    }
+    public DashboardPage replenishCardBalance(Integer sum, String cardNumber) {
+        fillInForm(sum, cardNumber);
         buttonTransfer.click();
         return new DashboardPage();
     }
 
-    public DashboardPage replenishCardCancel(Integer sum, DataHelper.CardInfo card) {
-        amount.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
-        amount.setValue(Integer.toString(sum));
-        fromCard.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
-        fromCard.sendKeys(card.getCardNumber());
+    public DashboardPage replenishCardCancel(Integer sum, String cardNumber) {
+        fillInForm(sum, cardNumber);
         buttonCancel.click();
         return new DashboardPage();
     }

@@ -40,18 +40,23 @@ public class TemplateSteps {
 
     @Когда("пользователь переводит {int} рублей с карты с номером {string} на свою {int} карту с главной страницы")
     public void transferMoneyFromSecondToFirst(int transfer, String cardNumber, int numberItem) {
-        Integer firstCardBalance = DashboardPage.getBalanceCard($$(".list__item div").get(numberItem - 1).getAttribute("data-test-id"));
-        Integer secondCardBalance = DashboardPage.getBalanceCard($$(".list__item div").last().getAttribute("data-test-id"));
-        String firstCardId = $$(".list__item div").get(numberItem - 1).getAttribute("data-test-id");
-        String secondCardId = $$(".list__item div").last().getAttribute("data-test-id");
-        if (secondCardBalance != 10_000) {
+        Integer firstCardBalance = dashboardPage.getBalanceCard(numberItem - 1);
+        Integer secondCardBalance = dashboardPage.getBalanceCard(1);
+        if (secondCardBalance < 10_000) {
             int alignTransfer = (firstCardBalance + secondCardBalance) / 2 - secondCardBalance;
-            DashboardPage.pressReplenishCard(secondCardId)
-                    .replenishCardBalance(alignTransfer, DataHelper.CardInfo.getFirstCardNumber(firstCardId));
-            firstCardBalance = DashboardPage.getBalanceCard(firstCardId);
-            secondCardBalance = DashboardPage.getBalanceCard(secondCardId);
+            dashboardPage.pressReplenishCard(1)
+                    .replenishCardBalance(alignTransfer, DataHelper.getFirstCardNumber());
+            firstCardBalance = dashboardPage.getBalanceCard(numberItem - 1);
+            secondCardBalance = dashboardPage.getBalanceCard(1);
         }
-        DashboardPage.pressReplenishCard(firstCardId)
+        if (secondCardBalance > 10_000) {
+            int alignTransfer = (firstCardBalance + secondCardBalance) / 2 - firstCardBalance;
+            dashboardPage.pressReplenishCard(numberItem - 1)
+                    .replenishCardBalance(alignTransfer, cardNumber);
+            firstCardBalance = dashboardPage.getBalanceCard(numberItem - 1);
+            secondCardBalance = dashboardPage.getBalanceCard(1);
+        }
+        dashboardPage.pressReplenishCard(numberItem-1)
                 .replenishCardBalance(transfer, cardNumber);
     }
 
@@ -72,7 +77,7 @@ public class TemplateSteps {
 
     @Тогда("баланс его {int} карты из списка на главной странице должен стать {int} рублей.")
     public void checkBalance(int numberItem, int expected) {
-        int firstCardBalance = DashboardPage.getBalanceCard($$(".list__item div").get(numberItem - 1).getAttribute("data-test-id"));
+        int firstCardBalance = dashboardPage.getBalanceCard(numberItem-1);
         assertEquals(expected, firstCardBalance);
     }
 }
