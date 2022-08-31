@@ -20,12 +20,14 @@ public class TransferPage {
     private SelenideElement toCard = $("[data-test-id=to] .input__control");
     private SelenideElement buttonTransfer = $("[data-test-id=action-transfer]");
     private SelenideElement buttonCancel = $("[data-test-id=action-cancel]");
+
     public void fillInForm(Integer sum, String cardNumber) {
         amount.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
         amount.setValue(Integer.toString(sum));
         fromCard.sendKeys(Keys.chord(Keys.CONTROL + "A"), Keys.DELETE);
         fromCard.sendKeys(cardNumber);
     }
+
     public DashboardPage replenishCardBalance(Integer sum, String cardNumber) {
         fillInForm(sum, cardNumber);
         buttonTransfer.click();

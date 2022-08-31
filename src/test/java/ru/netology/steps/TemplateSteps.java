@@ -56,7 +56,7 @@ public class TemplateSteps {
             firstCardBalance = dashboardPage.getBalanceCard(numberItem - 1);
             secondCardBalance = dashboardPage.getBalanceCard(1);
         }
-        dashboardPage.pressReplenishCard(numberItem-1)
+        dashboardPage.pressReplenishCard(numberItem - 1)
                 .replenishCardBalance(transfer, cardNumber);
     }
 
@@ -77,7 +77,7 @@ public class TemplateSteps {
 
     @Тогда("баланс его {int} карты из списка на главной странице должен стать {int} рублей.")
     public void checkBalance(int numberItem, int expected) {
-        int firstCardBalance = dashboardPage.getBalanceCard(numberItem-1);
+        int firstCardBalance = dashboardPage.getBalanceCard(numberItem - 1);
         assertEquals(expected, firstCardBalance);
     }
 }
